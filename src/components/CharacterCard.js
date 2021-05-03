@@ -10,6 +10,11 @@ const CharacterCard = ({ item }) => {
         </div>
         <div className="Card-Back center">
           <h1>{item.name}</h1>
+    <h2><strong>Actor Name:</strong> {item.portrayed}</h2>
+    <h2><strong>Birthday:</strong> {item.birthday}</h2>
+    <h2><strong>Status:</strong> {item.status}</h2>
+    
+   
         </div>
       </div>
     </div>
