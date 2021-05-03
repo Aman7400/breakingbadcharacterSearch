@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Characters from "./components/Characters";
+import Header from "./components/Header";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Search from "./components/Search";
 
 function App() {
+  const [items, setItems] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        `https://www.breakingbadapi.com/api/characters?name=${query}`
+      );
+      console.log(result.data);
+      setItems(result.data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [query]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Search
+        getQuery={(q) => {
+          setQuery(q);
+        }}
+      />
+      <Characters loading={isLoading} items={items} />
     </div>
   );
 }
